@@ -1,0 +1,11 @@
+name: ArmorStandTweak
+main: me.crafter.mc.armorstandtweak.ArmorStandTweak
+version: 1.0
+author: connection_lost
+description: >
+             Send player a message contains his death location
+commands:
+   as:
+      permission: armorstandtweak.use
+      usage: |
+         /as
