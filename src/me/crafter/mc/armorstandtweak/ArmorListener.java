@@ -19,6 +19,12 @@ public class ArmorListener implements Listener {
 	public void onPlayerInteractArmorStand(PlayerInteractAtEntityEvent event){
 		Player p = event.getPlayer();
 		if (p.isSneaking() && event.getRightClicked() != null && event.getRightClicked() instanceof ArmorStand){
+			
+			if (!p.hasPermission("armorstandtweak.use")){
+				p.sendMessage(ChatColor.RED + "You cannot use this feature.");
+				return;
+			}
+			
 			ArmorStand as = (ArmorStand)event.getRightClicked();
 			
 			String customname = "ArmorStand";
@@ -26,8 +32,8 @@ public class ArmorListener implements Listener {
 				customname = as.getCustomName();
 			}
 
-			p.sendMessage(ChatColor.YELLOW + "你选择了盔甲架(" + customname + ChatColor.YELLOW + ")" + ChatColor.AQUA + " #" + as.getEntityId());
-			p.sendMessage(ChatColor.YELLOW + "使用指令/as调节盔甲架的信息！");
+			p.sendMessage(ChatColor.YELLOW + "You selected(" + customname + ChatColor.YELLOW + ")" + ChatColor.AQUA + " #" + as.getEntityId());
+			p.sendMessage(ChatColor.YELLOW + "Use /as for more information.");
 			event.setCancelled(true);
 			ArmorStandWorker.aslist.put(p, as);
 			

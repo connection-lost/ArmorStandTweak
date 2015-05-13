@@ -61,13 +61,13 @@ public class ArmorStandWorker {
 	public static void sendReport(Player p){
 		ArmorStand as = aslist.get(p);
 		if (as.getCustomName() != null){
-			p.sendMessage(ChatColor.YELLOW + "盔甲架 自定义名称: " + ChatColor.RESET + as.getCustomName());
+			p.sendMessage(ChatColor.YELLOW + "ArmorStand Name: " + ChatColor.RESET + as.getCustomName());
 		} else {
-			p.sendMessage(ChatColor.YELLOW + "盔甲架 无自定义名称");
+			p.sendMessage(ChatColor.YELLOW + "Nameless ArmorStand");
 		}
 		
 		
-		String pre1 = "缩小/底盘/胳膊/隐身: ";
+		String pre1 = "Zoom/BottomPlate/Arms/Invisible: ";
 		
 		pre1 += as.isSmall() + "/";
 		pre1 += as.hasBasePlate() + "/";
@@ -79,15 +79,15 @@ public class ArmorStandWorker {
 		
 		p.sendMessage(ChatColor.YELLOW + pre1);
 
-		p.sendMessage(ChatColor.YELLOW + "头部角度: " + eulerToString(as.getHeadPose()));
-		p.sendMessage(ChatColor.YELLOW + "身体角度: " + eulerToString(as.getBodyPose()));
+		p.sendMessage(ChatColor.YELLOW + "Head Rotation: " + eulerToString(as.getHeadPose()));
+		p.sendMessage(ChatColor.YELLOW + "Body Rotation: " + eulerToString(as.getBodyPose()));
 		
-		p.sendMessage(ChatColor.YELLOW + "左腿角度: " + eulerToString(as.getLeftLegPose()));
-		p.sendMessage(ChatColor.YELLOW + "右腿角度: " + eulerToString(as.getRightLegPose()));
+		p.sendMessage(ChatColor.YELLOW + "Left Leg Rotation: " + eulerToString(as.getLeftLegPose()));
+		p.sendMessage(ChatColor.YELLOW + "Right Leg Rotation: " + eulerToString(as.getRightLegPose()));
 		
 		if (as.hasArms()){
-			p.sendMessage(ChatColor.YELLOW + "左手角度: " + eulerToString(as.getLeftArmPose()));
-			p.sendMessage(ChatColor.YELLOW + "右手角度: " + eulerToString(as.getRightArmPose()));
+			p.sendMessage(ChatColor.YELLOW + "Left Hand Rotation: " + eulerToString(as.getLeftArmPose()));
+			p.sendMessage(ChatColor.YELLOW + "Right Hand Rotation: " + eulerToString(as.getRightArmPose()));
 		}
 		
 	}

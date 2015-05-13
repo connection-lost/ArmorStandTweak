@@ -42,15 +42,19 @@ public class ArmorStandTweak extends JavaPlugin {
     		} else {
     			
     			if (!ArmorStandWorker.hasValidTarget(p)){
-    				p.sendMessage(ChatColor.RED + "你没有选择目标，选择目标需要潜行+右键选择盔甲架。");
+    				p.sendMessage(ChatColor.RED + "You don't have a target! Try sneak+right click an ArmorStand!");
     				return true;
     			}
     			
     			switch (args[0]){
     			case "name":
+    				if (!p.hasPermission("armorstandtweak.name")){
+    					p.sendMessage(ChatColor.RED + "You cannot use this feature.");
+    					return true;
+    				}
         			if (args.length == 1){
         				ArmorStandWorker.setName(p, null);
-        				p.sendMessage(ChatColor.YELLOW + "你移除了盔甲架的名字。");
+        				p.sendMessage(ChatColor.YELLOW + "You removed the name.");
         			} else {
         				String newname = "";
         				for (String x : args){
@@ -59,52 +63,68 @@ public class ArmorStandTweak extends JavaPlugin {
         				newname = ChatColor.translateAlternateColorCodes('&', newname);
         				newname = newname.substring(5, newname.length()-1);
         				if (newname.length() > 31){
-        					p.sendMessage(ChatColor.RED + "这个名字太长了！");
+        					p.sendMessage(ChatColor.RED + "This name is too long!");
         					return true;
         				}
         				ArmorStandWorker.setName(p, newname);
-        				p.sendMessage(ChatColor.YELLOW + "你将盔甲架的名字设为: " + newname);
+        				p.sendMessage(ChatColor.YELLOW + "You set the name to: " + newname);
         			}
         			break;
     			case "small":
+    				if (!p.hasPermission("armorstandtweak.small")){
+    					p.sendMessage(ChatColor.RED + "You cannot use this feature.");
+    					return true;
+    				}
         			if (ArmorStandWorker.setSmall(p)){
-        				p.sendMessage(ChatColor.YELLOW + "你把这个盔甲架缩小了。");
+        				p.sendMessage(ChatColor.YELLOW + "You shrinked the ArmorStand.");
         			} else {
-        				p.sendMessage(ChatColor.YELLOW + "你把这个盔甲架的大小复原了。");
+        				p.sendMessage(ChatColor.YELLOW + "You enlarged the ArmorStand");
         			}
         			break;
     			case "base":
+    				if (!p.hasPermission("armorstandtweak.base")){
+    					p.sendMessage(ChatColor.RED + "You cannot use this feature.");
+    					return true;
+    				}
         			if (ArmorStandWorker.setBase(p)){
-        				p.sendMessage(ChatColor.YELLOW + "你把这个盔甲架的底端复原了。");
+        				p.sendMessage(ChatColor.YELLOW + "You added the bottom plate.");
         			} else {
-        				p.sendMessage(ChatColor.YELLOW + "你把盔甲架的底端去掉了。");
+        				p.sendMessage(ChatColor.YELLOW + "You removed the bottom plate.");
         			}
         			break;
     			case "arms":
+    				if (!p.hasPermission("armorstandtweak.arms")){
+    					p.sendMessage(ChatColor.RED + "You cannot use this feature.");
+    					return true;
+    				}
         			if (ArmorStandWorker.setArms(p)){
-        				p.sendMessage(ChatColor.YELLOW + "你给盔甲架加入了胳膊。");
+        				p.sendMessage(ChatColor.YELLOW + "You added the arms.");
         			} else {
-        				p.sendMessage(ChatColor.YELLOW + "你移除了盔甲架的胳膊。");
+        				p.sendMessage(ChatColor.YELLOW + "You removed the arms.");
         			}
         			break;
     			case "visible":
     			case "invisible":
-    				if (!p.hasPermission("armorstandtweak.admin")){
-    					p.sendMessage(ChatColor.RED + "你没有权限用这个啦");
+    				if (!p.hasPermission("armorstandtweak.invisible")){
+    					p.sendMessage(ChatColor.RED + "You cannot use this feature.");
     					return true;
     				}
         			if (ArmorStandWorker.setInvisible(p)){
-        				p.sendMessage(ChatColor.YELLOW + "你让盔甲架显示出来了。");
+        				p.sendMessage(ChatColor.YELLOW + "You made it visible!");
         			} else {
-        				p.sendMessage(ChatColor.YELLOW + "你隐藏了盔甲架。");
+        				p.sendMessage(ChatColor.YELLOW + "You made it invisible! Make sure keep track where it is!");
         			}
         			break;
     			case "info":
     				ArmorStandWorker.sendReport(p);
     				break;
 
-    			case "setangel":
+    			case "setangle":
     			case "setrotation":
+    				if (!p.hasPermission("armorstandtweak.setangle")){
+    					p.sendMessage(ChatColor.RED + "You cannot use this feature.");
+    					return true;
+    				}
     				if (args.length != 5){
     					p.sendMessage(ChatColor.RED + "/as setangle <head/body/leftarm/rightarm/leftleg/rightleg> x y z");
     					return true;
@@ -118,7 +138,7 @@ public class ArmorStandTweak extends JavaPlugin {
     					y = Double.parseDouble(args[3]);
     					z = Double.parseDouble(args[4]);
     				} catch (Exception ex){
-    					p.sendMessage("请输入正确的数值。");
+    					p.sendMessage("Enter correct value(s).");
     				}
 
     				x = (x + 180D) % 360D - 180;
@@ -130,12 +150,16 @@ public class ArmorStandTweak extends JavaPlugin {
     				z /= 57.295D;
     				
     				if (ArmorStandWorker.setAngle(p, args[1], x, y, z)){
-    					p.sendMessage(ChatColor.YELLOW + "你将" + args[1] + "的角度设定为: " + args[2] + " " + args[3] + " " + args[4]);
+    					p.sendMessage(ChatColor.YELLOW + "You set " + args[1] + "'s angle to: " + args[2] + " " + args[3] + " " + args[4]);
     				} else {
-    					p.sendMessage(ChatColor.RED + "可用部位: head/body/leftarm/rightarm/leftleg/rightleg");
+    					p.sendMessage(ChatColor.RED + "Available: head/body/leftarm/rightarm/leftleg/rightleg");
     				}
         			break;
         			
+        			
+        		default:
+        			p.sendMessage(ChatColor.RED + "/as <name/small/base/arms/setangel>");
+        			break;
     			}
         		
     		}
